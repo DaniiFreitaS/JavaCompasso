@@ -1,0 +1,133 @@
+openapi: 3.0.1
+info:
+  title: API Estados do Brasil
+  description: API para cadastrar, listar, atualizar e deletar informaçoes dos estados brasileiros
+  version: 0.0.1
+  contact:
+    name: Daniel Freitas
+    email: danielfreitaslele14@gmail.com
+    url: https://github.com/DaniiFreitaS/JavaCompasso/tree/main/Sprint3/avaliacao
+  license:
+    name: "Licença: CompassoUol"
+servers:
+- url: http://localhost:8080
+  description: API da avaliaçao da Sprint 3
+paths:
+  /estados:
+    get:
+      summary: lista todos os estados brasileiros cadastrados por filtros de regiao, populacao e area, ou lista o Estado por id
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: Long
+                    nome:
+                      type: string
+                    regiao:
+                      type: string
+                    capital:
+                      type: string
+                    populacao:
+                      type: integer
+                    area:
+                      type: double
+    post:
+          summary: Cadastra novo Estado a lista
+          requestBody:
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    id:
+                      type: Long
+                    nome:
+                      type: string
+                    regiao:
+                      type: string
+                    capital:
+                      type: string
+                    populacao:
+                      type: integer
+                    area:
+                      type: double
+            responses:
+            201:
+              description: Created
+              content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: Long
+                    nome:
+                      type: string
+                    regiao:
+                      type: string
+                    capital:
+                      type: string
+                    populacao:
+                      type: integer
+                    area:
+                      type: double
+      /estados/{id}:
+        put:
+              summary: seleciona o Id de um Estado e atualiza os dados cadastrados nele
+              requestBody:
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    nome:
+                      type: string
+                    regiao:
+                      type: string
+                    capital:
+                      type: string
+                    populacao:
+                      type: integer
+                    area:
+                      type: double
+            responses:
+            200:
+              description: OK
+              content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: Long
+                    nome:
+                      type: string
+                    regiao:
+                      type: string
+                    capital:
+                      type: string
+                    populacao:
+                      type: integer
+                    area:
+                      type: double
+          delete:
+                  summary: seleciona o Id de um Estado e deleta ele da lista
+                responses:
+                200:
+                description: OK
+                404:
+                description: Not Found
+
+
+          
