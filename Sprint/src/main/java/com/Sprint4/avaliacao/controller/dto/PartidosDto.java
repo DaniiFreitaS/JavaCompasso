@@ -16,9 +16,9 @@ public class PartidosDto {
     private LocalDate dataFundacao;
 
     public PartidosDto(Partidos partidos){
-        this.nome = nome;
-        this.dataFundacao = dataFundacao;
-        this.ideologia = ideologia;
+        this.nome = partidos.getNome();
+        this.dataFundacao = partidos.getDataFundacao();
+        this.ideologia = partidos.getIdeologia();
     }
 
     public static List<PartidosDto> converter(List<Partidos> partidos){

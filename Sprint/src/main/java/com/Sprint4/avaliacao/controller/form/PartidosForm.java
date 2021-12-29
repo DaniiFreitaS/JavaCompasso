@@ -16,6 +16,8 @@ public class PartidosForm {
     @NotEmpty
     @Length(max = 50)
     private String nome;
+    @Length(max = 20)
+    private String sigla;
     @Enumerated(EnumType.STRING)
     private IdeologiaEnun ideologia;
     @NotNull
@@ -28,5 +30,42 @@ public class PartidosForm {
         this.nome = partidos.getNome();
         this.dataFundacao = partidos.getDataFundacao();
         this.ideologia = partidos.getIdeologia();
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public IdeologiaEnun getIdeologia() {
+        return ideologia;
+    }
+
+    public void setIdeologia(IdeologiaEnun ideologia) {
+        this.ideologia = ideologia;
+    }
+
+    public LocalDate getDataFundacao() {
+        return dataFundacao;
+    }
+
+    public void setDataFundacao(LocalDate dataFundacao) {
+        this.dataFundacao = dataFundacao;
+    }
+
+    public String getSigla() {
+        return sigla;
+    }
+
+    public void setSigla(String sigla) {
+        this.sigla = sigla;
+    }
+
+    public Partidos converter(PartidosForm partidos){
+        return new Partidos(partidos.getNome(), partidos.getSigla(), partidos.getIdeologia(), partidos.getDataFundacao());
+
     }
 }
