@@ -18,15 +18,15 @@ public class PartidosRepositoryTest {
 
     @Autowired
     private PartidosRepository repository;
-    @Autowired
-    private Partidos partido;
+
 
     @Test
     public void testeCarregaPartidosPorIdeologia(){
-        IdeologiaEnun ideologia = ideologia.CENTRO;
+        Partidos partidos = new Partidos();
+        partidos.setIdeologia(IdeologiaEnun.CENTRO);
 
-        List<Partidos> partidos = repository.findByIdeologia(ideologia.CENTRO);
-        Assert.assertNotNull(partidos);
-        Assert.assertEquals(ideologia, partido.getIdeologia());
+        List<Partidos> teste = repository.findByIdeologia(partidos.getIdeologia());
+        Assert.assertNotNull(teste);
+        Assert.assertEquals(teste, repository.findByIdeologia(IdeologiaEnun.CENTRO));
     }
 }
