@@ -3,6 +3,7 @@ package com.Sprint4.avaliacao.controller;
 
 import com.Sprint4.avaliacao.controller.dto.PartidosDto;
 import com.Sprint4.avaliacao.controller.form.PartidosForm;
+import com.Sprint4.avaliacao.partidos.IdeologiaEnun;
 import com.Sprint4.avaliacao.partidos.Partidos;
 import com.Sprint4.avaliacao.repository.PartidosRepository;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/partidos")
@@ -22,11 +24,25 @@ public class PartidosController {
     private PartidosRepository partidosRepository;
 
     @GetMapping
-    public List<PartidosDto> lista(){
+    public List<PartidosDto> lista(
+            @RequestParam(required = false,value = "ideologia")IdeologiaEnun ideologia
+    ){
         List<Partidos> partidos = null;
-        partidos = partidosRepository.findAll();
+        if(ideologia != null){
 
+            partidos = partidosRepository.findByIdeologia(ideologia);
+        }else {
+            partidos = partidosRepository.findAll();
+        }
         return PartidosDto.converter(partidos);
+    }
+    @GetMapping("/{id}")
+    public ResponseEntity<PartidosDto> listaId(@PathVariable Long id){
+        Optional<Partidos>  listaid = partidosRepository.findById(id);
+        if (listaid.isPresent()) {
+            return ResponseEntity.ok(new PartidosDto(listaid.get()));
+        }
+        return ResponseEntity.notFound().build();
     }
     @PostMapping
     @Transactional
@@ -36,6 +52,17 @@ public class PartidosController {
         partidosRepository.save(partidos);
         URI uri = uriBuider.path("/estados/{id}").buildAndExpand(partidos.getId()).toUri();
         return ResponseEntity.created(uri).body(new PartidosDto(partidos));
+    }
+
+    @DeleteMapping ("/{id}")
+    @Transactional
+    public ResponseEntity<?> deletar(@PathVariable Long id){
+        Optional<Partidos> verifica = partidosRepository.findById(id);
+        if(verifica.isPresent()){
+            partidosRepository.deleteById(id);
+            return ResponseEntity.ok().build();
+        }
+        return  ResponseEntity.notFound().build();
     }
 
 }
